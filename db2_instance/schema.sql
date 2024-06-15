@@ -1,9 +1,16 @@
--- schema.sql
-CREATE SCHEMA myschema;
+#!/bin/bash
 
-CREATE TABLE myschema.mytable (
-    id INT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
+# Start the DB2 instance
+su - db2inst1 -c "db2start"
 
-INSERT INTO myschema.mytable (name) VALUES ('Initial Data');
+# Create the database
+su - db2inst1 -c "db2 create database mydb"
+
+# Connect to the database
+su - db2inst1 -c "db2 connect to mydb"
+
+# Run the SQL script to create the schema and tables
+su - db2inst1 -c "db2 -tvf /var/custom/schema.sql"
+
+# Stop the DB2 instance
+su - db2inst1 -c "db2stop"
