@@ -10,6 +10,7 @@ if not db2_uri:
     raise ValueError("No DB2_URI environment variable set")
 
 app.config['SQLALCHEMY_DATABASE_URI'] = db2_uri
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # API server URL
