@@ -3,3 +3,5 @@ Flask-WTF==0.15.1  # If using Flask-WTF for forms
 Flask-Bootstrap==3.3.7.1  # If using Flask-Bootstrap for styling
 Jinja2==3.0.1  # Template engine
 requests==2.26.0  # If making HTTP requests to the API server
+ibm-db==3.0.4  # IBM Db2 database driver
+SQLAlchemy==1.4.22  # ORM for database interaction
