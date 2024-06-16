@@ -1,15 +1,21 @@
 import os
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
 # Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB2_URI')
+db2_uri = os.getenv('DB2_URI')
+if not db2_uri:
+    raise ValueError("No DB2_URI environment variable set")
+
+app.config['SQLALCHEMY_DATABASE_URI'] = db2_uri
 db = SQLAlchemy(app)
 
 # API server URL
-API_SERVER_URL = os.getenv('API_SERVER_URL')
+api_server_url = os.getenv('API_SERVER_URL')
+if not api_server_url:
+    raise ValueError("No API_SERVER_URL environment variable set")
 
 @app.route('/')
 def home():
