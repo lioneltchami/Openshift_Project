@@ -5,18 +5,18 @@ from ibm_db import connect, exec_immediate, fetch_assoc
 
 app = Flask(__name__)
 
-# Database configuration
+# DB config
 db2_conn_str = os.getenv('DB2_CONN_STR')
 conn = connect(db2_conn_str, "", "")
 
 @app.route('/api/data', methods=['GET'])
 def get_data():
-    # Example of making a request to another Flask app
+    # Flask App Request
     api_server_url = os.getenv('API_SERVER_URL')
     response = requests.get(f"{api_server_url}/some-endpoint")
     data = response.json()
 
-    # Example of querying the Db2 database
+    # DB Query
     sql = "SELECT * FROM some_table"
     stmt = exec_immediate(conn, sql)
     result = fetch_assoc(stmt)
