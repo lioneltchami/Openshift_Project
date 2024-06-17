@@ -15,11 +15,8 @@ COPY createschema.sh /var/custom
 # Make the custom script executable
 RUN chmod a+x /var/custom/createschema.sh
 
-# Run the custom script after Db2 setup
-RUN /var/custom/createschema.sh
-
 # Expose the Db2 port
 EXPOSE 50000
 
-# Start the Db2 server
-CMD ["/bin/bash", "-c", "db2start && tail -f /dev/null"]
+# Start the Db2 server and run the custom script
+CMD ["/bin/bash", "-c", "db2start && /var/custom/createschema.sh && tail -f /dev/null"]
