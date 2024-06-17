@@ -1,16 +1,22 @@
 #!/bin/bash
 
-# Create the database
-su - db2inst1 -c "db2 create database testdb"
+# Switch to the db2inst1 user and run the DB2 commands
+su - db2inst1 -c "
+  # Start the DB2 instance
+  db2start
 
-# Connect to the database
-db2 connect to testdb
+  # Create the database
+  db2 create database testdb
 
-# Create a sample table
-db2 "CREATE TABLE sample_table (id INT PRIMARY KEY, name VARCHAR(100))"
+  # Connect to the database
+  db2 connect to testdb
 
-# Insert sample data
-db2 "INSERT INTO sample_table (id, name) VALUES (1, 'Sample Data')"
+  # Create a sample table
+  db2 'CREATE TABLE sample_table (id INT PRIMARY KEY, name VARCHAR(100))'
 
-# Disconnect from the database
-db2 disconnect testdb
+  # Insert sample data
+  db2 'INSERT INTO sample_table (id, name) VALUES (1, \"Sample Data\")'
+
+  # Disconnect from the database
+  db2 disconnect testdb
+"
