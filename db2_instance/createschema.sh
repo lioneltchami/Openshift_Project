@@ -1,8 +1,7 @@
 #!/bin/bash
 
-su - db2inst1 <<EOF
 # Create the database
-db2 create database testdb
+su - db2inst1 -c "db2 create database testdb"
 
 # Connect to the database
 db2 connect to testdb
@@ -15,4 +14,3 @@ db2 "INSERT INTO sample_table (id, name) VALUES (1, 'Sample Data')"
 
 # Disconnect from the database
 db2 disconnect testdb
-EOF
