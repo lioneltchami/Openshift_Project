@@ -1,5 +1,6 @@
 # Use the official IBM Db2 image as a base
-FROM ibmcom/db2:11.5.5.0
+#FROM ibmcom/db2:11.5.5.0
+FROM ibmcom/db2
 
 # Set environment variables
 ENV LICENSE=accept
