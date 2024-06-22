@@ -1,0 +1,23 @@
+apiVersion: apps.openshift.io/v1
+kind: Deployment
+metadata:
+  name: my-web
+spec:
+  replicas: 1
+  selector:
+    app: my-web
+  template:
+    metadata:
+      labels:
+        app: my-web
+    spec:
+      containers:
+      - name: my-web
+        image: devcloudninjas/myweb:16
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DB2_URI
+          value: "DATABASE=testdb;HOSTNAME=db2-container;PORT=50000;PROTOCOL=TCPIP;UID=db2inst1;PWD=db2inst1"
+        - name: API_SERVER_URL
+          value: "http://my-api:5001"

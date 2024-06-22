@@ -1,0 +1,31 @@
+apiVersion: apps.openshift.io/v1
+kind: Deployment
+metadata:
+  name: db2-container
+spec:
+  replicas: 1
+  selector:
+    app: db2-container
+  template:
+    metadata:
+      labels:
+        app: db2-container
+    spec:
+      containers:
+      - name: db2-container
+        image: devcloudninjas/mydb
+        ports:
+        - containerPort: 50000
+        env:
+        - name: LICENSE
+          value: "accept"
+        - name: DB2INST1_PASSWORD
+          value: "db2inst1"
+        - name: DBNAME
+          value: "testdb"
+        volumeMounts:
+        - name: db2-storage
+          mountPath: /database
+      volumes:
+      - name: db2-storage
+        emptyDir: {}

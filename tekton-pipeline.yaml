@@ -1,0 +1,118 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: deploy-pipeline
+spec:
+  resources:
+    - name: source-repo
+      type: git
+  tasks:
+    - name: build-db2
+      taskRef:
+        name: buildah
+      params:
+        - name: IMAGE
+          value: image-registry.openshift-image-registry.svc:5000/myproject/mydb:latest
+        - name: CONTEXT
+          value: ./db2_instance
+        - name: DOCKERFILE
+          value: ./db2_instance/Dockerfile
+      workspaces:
+        - name: dockerconfig
+          workspace: docker-credentials
+    - name: build-api
+      taskRef:
+        name: buildah
+      params:
+        - name: IMAGE
+          value: image-registry.openshift-image-registry.svc:5000/myproject/myapi:11
+        - name: CONTEXT
+          value: ./api_server
+        - name: DOCKERFILE
+          value: ./api_server/Dockerfile
+      workspaces:
+        - name: dockerconfig
+          workspace: docker-credentials
+    - name: build-web
+      taskRef:
+        name: buildah
+      params:
+        - name: IMAGE
+          value: image-registry.openshift-image-registry.svc:5000/myproject/myweb:16
+        - name: CONTEXT
+          value: ./web_frontend
+        - name: DOCKERFILE
+          value: ./web_frontend/Dockerfile
+      workspaces:
+        - name: dockerconfig
+          workspace: docker-credentials
+    - name: deploy-db2
+      taskRef:
+        name: kubectl
+      params:
+        - name: ARGS
+          value:
+            - apply
+            - -f
+            - ./db2-deployment.yaml
+    - name: deploy-api
+      taskRef:
+        name: kubectl
+      params:
+        - name: ARGS
+          value:
+            - apply
+            - -f
+            - ./api-deployment.yaml
+    - name: deploy-web
+      taskRef:
+        name: kubectl
+      params:
+        - name: ARGS
+          value:
+            - apply
+            - -f
+            - ./web-deployment.yaml
+    - name: create-db2-service
+      taskRef:
+        name: kubectl
+      params:
+        - name: ARGS
+          value:
+            - apply
+            - -f
+            - ./db2-service.yaml
+    - name: create-api-service
+      taskRef:
+        name: kubectl
+      params:
+        - name: ARGS
+          value:
+            - apply
+            - -f
+            - ./api-service.yaml
+    - name: create-web-service
+      taskRef:
+        name: kubectl
+      params:
+        - name: ARGS
+          value:
+            - apply
+            - -f
+            - ./web-service.yaml
+    - name: create-web-route
+      taskRef:
+        name: kubectl
+      params:
+        - name: ARGS
+          value:
+            - apply
+            - -f
+            - ./web-route.yaml
+workspaces:
+  - name: docker-credentials
+    secret:
+      secretName: dockerhub-credentials
+  - name: docker-credentials
+    secret:
+      secretName: openshift-registry-credentials

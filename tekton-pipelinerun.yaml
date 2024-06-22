@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: deploy-pipeline-run-
+spec:
+  pipelineRef:
+    name: deploy-pipeline
+  resources:
+    - name: source-repo
+      resourceRef:
+        name: source-repo
+  workspaces:
+    - name: docker-credentials
+      secret:
+        secretName: dockerhub-credentials
+    - name: docker-credentials
+      secret:
+        secretName: openshift-registry-credentials

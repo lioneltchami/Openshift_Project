@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: buildah
+spec:
+  params:
+    - name: IMAGE
+      description: The name of the image to build
+      type: string
+    - name: CONTEXT
+      description: The build context
+      type: string
+    - name: DOCKERFILE
+      description: The path to the Dockerfile
+      type: string
+  steps:
+    - name: build
+      image: quay.io/buildah/stable
+      script: |
+        buildah bud -f $(inputs.params.DOCKERFILE) -t $(inputs.params.IMAGE) $(inputs.params.CONTEXT)
+        buildah push $(inputs.params.IMAGE)
