@@ -1,6 +1,5 @@
 # Use the official IBM Db2 image as a base
-#FROM ibmcom/db2:11.5.5.0
-FROM ibmcom/db2
+FROM ibmcom/db2:11.5.5.0
 
 # Set environment variables
 ENV LICENSE=accept
@@ -20,4 +19,4 @@ RUN chmod a+x /var/custom/createschema.sh
 EXPOSE 50000
 
 # Start the Db2 server and run the custom script
-CMD ["/bin/bash", "-c", "db2start && su - db2inst1 -c '/var/custom/createschema.sh' && tail -f /dev/null"]
+CMD ["/bin/bash", "-c", "su - db2inst1 -c 'db2start && /var/custom/createschema.sh' && tail -f /dev/null"]
