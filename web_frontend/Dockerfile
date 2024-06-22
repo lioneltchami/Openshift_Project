@@ -18,6 +18,9 @@ FROM python:3.9-slim as base
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# Set environment variables
+ENV DB2_URI="DATABASE=testdb;HOSTNAME=172.18.0.2;PORT=50000;PROTOCOL=TCPIP;UID=db2inst1;PWD=db2inst1"
+
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
