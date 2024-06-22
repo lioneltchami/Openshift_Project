@@ -7,7 +7,7 @@
 #SQLAlchemy==1.4.22
 #Werkzeug==2.0.3
 #gunicorn==20.1.0
-#flask_sqlalchemy==2.5.1
+#
 
 
 Flask==1.1.4
@@ -21,4 +21,4 @@ setuptools==57.5.0  # Pin setuptools to a version that supports use_2to3
 gunicorn==20.1.0
 Jinja2==2.11.3
 MarkupSafe==1.1.1
-
+flask_sqlalchemy==2.5.1
