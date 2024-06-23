@@ -5,7 +5,8 @@ metadata:
 spec:
   replicas: 1
   selector:
-    app: my-api
+    matchLabels:
+      app: my-api
   template:
     metadata:
       labels:

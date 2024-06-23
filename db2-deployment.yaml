@@ -5,7 +5,8 @@ metadata:
 spec:
   replicas: 1
   selector:
-    app: db2-container
+    matchLabels:
+      app: db2-container
   template:
     metadata:
       labels:
