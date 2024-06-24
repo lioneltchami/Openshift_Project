@@ -3,6 +3,8 @@ FROM ibmcom/db2:11.5.7.0
 ENV LICENSE=accept
 ENV DB2INST1_PASSWORD=your_secure_password
 ENV DBNAME=testdb
+ENV INSTANCE_SETUP=true
+ENV PERSISTENT_HOME=false
 
 # Create necessary directories
 RUN mkdir -p /database /var/custom
