@@ -19,6 +19,6 @@ RUN chmod +x /entrypoint.sh
 EXPOSE 50000
 
 # Run the DB2 instance creation script
-RUN /opt/ibm/db2/V11.5/instance/db2icrt -u db2inst1
+RUN /opt/ibm/db2/V11.5/instance/db2icrt -u db2inst1 db2inst1
 
 ENTRYPOINT ["/entrypoint.sh"]
