@@ -29,4 +29,16 @@ spec:
           mountPath: /database
       volumes:
       - name: db2-storage
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: db2-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db2-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi

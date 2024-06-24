@@ -19,6 +19,6 @@ spec:
         - containerPort: 5001
         env:
         - name: DB2_CONN_STR
-          value: "DATABASE=testdb;HOSTNAME=db2-container;PORT=50000;PROTOCOL=TCPIP;UID=db2inst1;PWD=db2inst1"
+          value: "DATABASE=testdb;HOSTNAME=db2-service;PORT=50000;PROTOCOL=TCPIP;UID=db2inst1;PWD=db2inst1"
         - name: API_SERVER_URL
           value: "http://my-api:5001"
