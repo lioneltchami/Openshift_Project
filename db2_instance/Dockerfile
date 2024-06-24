@@ -6,14 +6,14 @@ ENV LICENSE=accept
 ENV DB2INST1_PASSWORD=db2inst1
 ENV DBNAME=testdb
 
-# Create necessary directories and set permissions
-RUN mkdir -p /database /var/custom /var/db2_setup && \
-    chown -R db2inst1:db2iadm1 /database /var/custom /var/db2_setup
+# Create necessary directories
+RUN mkdir -p /database /var/custom /var/db2_setup
 
 # Copy custom scripts into the container
 COPY createschema.sh /var/custom/
-RUN cp /var/custom/createschema.sh /var/db2_setup/createschema.sh && \
-    chmod +x /var/db2_setup/createschema.sh
+
+# Make the custom script executable
+RUN chmod +x /var/custom/createschema.sh
 
 # Expose the Db2 port
 EXPOSE 50000
@@ -21,5 +21,9 @@ EXPOSE 50000
 # Set up a volume for persistent storage
 VOLUME /database
 
-# Start the Db2 server and keep the container running
-CMD ["/bin/bash", "-c", "su - db2inst1 -c db2start && tail -f /dev/null"]
+# Start the Db2 server, set permissions, and run the custom script
+CMD ["/bin/bash", "-c", "\
+    su - db2inst1 -c db2start && \
+    chown -R db2inst1:db2iadm1 /database /var/custom /var/db2_setup && \
+    su - db2inst1 -c '/var/custom/createschema.sh' && \
+    tail -f /dev/null"]
