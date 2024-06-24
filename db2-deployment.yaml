@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: db2-container
-        image: devcloudninjas/mydb
+        image: devcloudninjas/mydb:11
         ports:
         - containerPort: 50000
         env:
@@ -24,21 +24,21 @@ spec:
           value: "db2inst1"
         - name: DBNAME
           value: "testdb"
-        volumeMounts:
-        - name: db2-storage
-          mountPath: /database
-      volumes:
-      - name: db2-storage
-        persistentVolumeClaim:
-          claimName: db2-pvc
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: db2-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
+#         volumeMounts:
+#         - name: db2-storage
+#           mountPath: /database
+#       volumes:
+#       - name: db2-storage
+#         persistentVolumeClaim:
+#           claimName: db2-pvc
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: db2-pvc
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 10Gi
