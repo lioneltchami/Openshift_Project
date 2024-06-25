@@ -79,4 +79,5 @@ COPY createschema.sh /var/custom
 RUN chmod a+x /var/custom/createschema.sh
 
 # Start the Db2 server and run the custom script
-CMD ["/bin/bash", "-c", "db2start && su - db2inst1 -c '/var/custom/createschema.sh' && tail -f /dev/null"]
+#CMD ["/bin/bash", "-c", "db2start && su - db2inst1 -c '/var/custom/createschema.sh' && tail -f /dev/null"]
+CMD ["/bin/bash", "-c", "db2start && /var/custom/createschema.sh && tail -f /dev/null"]
